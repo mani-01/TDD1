@@ -2,6 +2,7 @@ package com.qa.testdrivendevelopment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Questions {
@@ -33,10 +34,8 @@ public class Questions {
 	 */
 	public String multiChar(String input) {
 		String x = "";
-		for (int i=0; i< input.length(); i++) {
-			x += input.substring(i, i+1) 
-					+ input.substring(i, i+1) 
-					+ input.substring(i, i+1);
+		for (int i = 0; i < input.length(); i++) {
+			x += input.substring(i, i + 1) + input.substring(i, i + 1) + input.substring(i, i + 1);
 		}
 		return x;
 	}
@@ -61,7 +60,7 @@ public class Questions {
 		if (z1 == z2) {
 			return "";
 		} else {
-			String remOther = y.substring(z1+5, z2);
+			String remOther = y.substring(z1 + 5, z2);
 			StringBuilder sb = new StringBuilder(remOther);
 			return sb.reverse().toString();
 		}
@@ -80,9 +79,9 @@ public class Questions {
 	 * evenlySpaced(4, 60, 9) → false
 	 */
 	public boolean evenlySpaced(int a, int b, int c) {
-		int[] orderedList = {a,b,c};
+		int[] orderedList = { a, b, c };
 		Arrays.sort(orderedList);
-		
+
 		if (orderedList[0] - orderedList[1] == orderedList[1] - orderedList[2]) {
 			return true;
 		} else {
@@ -102,18 +101,18 @@ public class Questions {
 	 * nMid("Chocolate", 1) → "Choclate"<br>
 	 */
 	public String nMid(String input, int n) {
-		
+
 		StringBuilder in = new StringBuilder(input);
-		int midIndex = (in.length() - 1) /2;
-		if (n==1) {
+		int midIndex = (in.length() - 1) / 2;
+		if (n == 1) {
 			in.delete(midIndex, midIndex + 1);
 		} else {
-			int oneSide = (n - 1) /2;
+			int oneSide = (n - 1) / 2;
 			in.delete((midIndex - oneSide), (midIndex + oneSide + 1));
-			
+
 		}
-		
-		return in.toString() ;
+
+		return in.toString();
 	}
 
 	/**
@@ -132,8 +131,8 @@ public class Questions {
 		String i = input.toLowerCase();
 		if (i.endsWith("java")) {
 			return true;
-		}else {
-		return false;
+		} else {
+			return false;
 		}
 	}
 
@@ -151,25 +150,22 @@ public class Questions {
 	public int superBlock(String input) {
 		int count = 1;
 		int highestCount = 1;
-		
-		if (input.length() == 0) { 
+
+		if (input.length() == 0) {
 			return 0;
-		}else {
-		for (int i = 1; i < input.length(); i++) {
-			if (input.charAt(i-1) == input.charAt(i)) {
-				count++;
-				System.out.println("COUNT"+count);	
-			}else {
-				count = 1;
+		} else {
+			for (int i = 1; i < input.length(); i++) {
+				if (input.charAt(i - 1) == input.charAt(i)) {
+					count++;
+				} else {
+					count = 1;
+				}
+				if (count >= highestCount) {
+					highestCount = count;
+				}
 			}
-			if (count >= highestCount){
-				highestCount = count;
-				System.out.println("HIGH"+highestCount);
-			} 
-		}
-		
-		
-		return highestCount;
+
+			return highestCount;
 		}
 	}
 
@@ -186,7 +182,21 @@ public class Questions {
 	 * HINT: String.toLowerCase
 	 */
 	public int amISearch(String sentence) {
-		return -1;
+		String lowerCase = sentence.toLowerCase();
+		String withSpaces = " " + lowerCase + " ";
+
+		int amOccurances = 0;
+		int index = withSpaces.indexOf(" am ");
+
+		String newStr = withSpaces;
+
+		while (index != -1) {
+			newStr = newStr.replaceFirst(" am ", "");
+			index = newStr.indexOf(" am ");
+			amOccurances++;
+		}
+
+		return amOccurances;
 	}
 
 	/**
@@ -201,7 +211,19 @@ public class Questions {
 	 * fizzBuzz(8) → null
 	 */
 	public String fizzBuzz(int number) {
-		return "";
+		String startingStr = "";
+		if (number % 3 == 0) {
+			startingStr += "fizz";
+		}
+		if (number % 5 == 0) {
+			startingStr += "buzz";
+		}
+
+		if (startingStr == "") {
+			return null;
+		} else {
+			return startingStr;
+		}
 	}
 
 	/**
@@ -225,7 +247,26 @@ public class Questions {
 	 */
 
 	public int largest(String input) {
-		return -1;
+		//split string into different ints
+		String[] sArr = input.split(" ");
+		List<Integer> iArr = new ArrayList<>();
+		
+		for(String i : sArr) {
+			int addDigits = 0;
+			for (String c : i.split("")) {
+				addDigits += Integer.valueOf(c);
+			}
+			iArr.add(addDigits);
+		}
+		
+		int max = 0;
+		
+		for (int i=0; i<iArr.size(); i++) {
+			while (iArr.get(i) > max) {
+				max = iArr.get(i);
+			}
+		}
+		return max;
 	}
 
 	/**
@@ -242,6 +283,32 @@ public class Questions {
 	 * HINT: String.charAt
 	 */
 	public boolean compares(String word, int index, char letter) {
+		String wordFormatted = word.toLowerCase().replace(" ", "");
+		String charToString = String.valueOf(letter);
+		String newString = wordFormatted;
+		
+		while (newString.contains(charToString)){
+			int locationOfChar = wordFormatted.indexOf(letter) +1;
+			if ((locationOfChar) == index) {
+				return true;
+			} else {
+				String d = String.valueOf(wordFormatted.charAt(locationOfChar-1));
+				newString = newString.replaceFirst(d, "");
+			}
+		}
+		
+			
 		return false;
+		
+		
 	}
 }
+
+
+
+
+
+
+
+
+
