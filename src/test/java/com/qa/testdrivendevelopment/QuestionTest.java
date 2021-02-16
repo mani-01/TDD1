@@ -76,8 +76,8 @@ public class QuestionTest {
 	
 	@Test
 	public void superBlockTest() {
-		//assertEquals(3, questions.superBlock("hooopplla"));
-		//assertEquals(4, questions.superBlock("abbCCCddDDDDeeEEE"));
+		assertEquals(3, questions.superBlock("hooopplla"));
+		assertEquals(4, questions.superBlock("abbCCCddDDDDeeEEE"));
 		assertEquals(5, questions.superBlock("abbCCCCC"));
 		assertEquals(0, questions.superBlock(""));
 	}
@@ -112,3 +112,15 @@ public class QuestionTest {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
